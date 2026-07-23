@@ -7,7 +7,11 @@ import { createClient } from "@/lib/supabase/client";
 const inputClass =
   "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
 
-export default function TranscriptPanel() {
+export default function TranscriptPanel({
+  context = "board",
+}: {
+  context?: "board" | "kb";
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [meetingTitle, setMeetingTitle] = useState("");
@@ -74,8 +78,15 @@ export default function TranscriptPanel() {
         return;
       }
 
+      const taskPart =
+        data.tasks_created > 0
+          ? `${data.tasks_created} task${data.tasks_created === 1 ? "" : "s"} added to To Do`
+          : "";
+
       setResultMessage(
-        `Created ${data.tasks_created} task${data.tasks_created === 1 ? "" : "s"} in To Do.`,
+        context === "kb"
+          ? `Saved notes to your Knowledge Base.${taskPart ? ` Also ${taskPart}.` : ""}`
+          : `Created ${data.tasks_created} task${data.tasks_created === 1 ? "" : "s"} in To Do.`,
       );
       setMeetingTitle("");
       setRawText("");
@@ -102,7 +113,9 @@ export default function TranscriptPanel() {
     <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-semibold text-gray-900">
-          Paste meeting transcript
+          {context === "kb"
+            ? "Paste transcript for notes"
+            : "Paste meeting transcript"}
         </h2>
         <button
           onClick={() => setOpen(false)}
@@ -149,8 +162,12 @@ export default function TranscriptPanel() {
             {status === "saving"
               ? "Saving..."
               : status === "parsing"
-                ? "Extracting your action items..."
-                : "Save and extract tasks"}
+                ? context === "kb"
+                  ? "Extracting notes..."
+                  : "Extracting your action items..."
+                : context === "kb"
+                  ? "Save and extract notes"
+                  : "Save and extract tasks"}
           </button>
           {status === "error" && (
             <p className="text-sm text-red-600">{errorMessage}</p>

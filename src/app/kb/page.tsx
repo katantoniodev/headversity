@@ -46,7 +46,7 @@ export default async function KbListPage({
           </Link>
         </div>
 
-        <TranscriptPanel />
+        <TranscriptPanel context="kb" />
 
         <form className="mb-4 flex gap-3" method="get">
           <input
