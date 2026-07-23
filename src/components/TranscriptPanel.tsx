@@ -66,7 +66,11 @@ export default function TranscriptPanel() {
 
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(data?.error ?? "Failed to parse transcript.");
+        setErrorMessage(
+          data?.raw
+            ? `${data.error}: ${data.raw}`
+            : (data?.error ?? "Failed to parse transcript."),
+        );
         return;
       }
 

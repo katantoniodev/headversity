@@ -91,18 +91,22 @@ ${transcript.raw_text}
     );
   }
 
-  const cleaned = responseText
-    .trim()
-    .replace(/^```(?:json)?/i, "")
-    .replace(/```$/, "")
-    .trim();
+  const firstBrace = responseText.indexOf("{");
+  const lastBrace = responseText.lastIndexOf("}");
+  const cleaned =
+    firstBrace !== -1 && lastBrace !== -1
+      ? responseText.slice(firstBrace, lastBrace + 1)
+      : responseText.trim();
 
   let parsed: ParsedResponse;
   try {
     parsed = JSON.parse(cleaned);
   } catch {
     return NextResponse.json(
-      { error: "Could not parse Claude's response as JSON" },
+      {
+        error: "Could not parse Claude's response as JSON",
+        raw: responseText.slice(0, 500),
+      },
       { status: 502 },
     );
   }
