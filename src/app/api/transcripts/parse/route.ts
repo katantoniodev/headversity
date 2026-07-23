@@ -92,9 +92,15 @@ ${transcript.raw_text}
     });
     const textBlock = message.content.find((b) => b.type === "text");
     responseText = textBlock?.type === "text" ? textBlock.text : "";
-  } catch {
+  } catch (err) {
+    const detail =
+      err instanceof Anthropic.APIError
+        ? `${err.status} ${err.message}`
+        : err instanceof Error
+          ? err.message
+          : "unknown error";
     return NextResponse.json(
-      { error: "Failed to reach Claude" },
+      { error: "Failed to reach Claude", raw: detail },
       { status: 502 },
     );
   }
