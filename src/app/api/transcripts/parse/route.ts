@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 
+export const maxDuration = 60;
+
 type ParsedActionItem = {
   title: string;
   detail: string | null;
@@ -86,7 +88,7 @@ ${transcript.raw_text}
   try {
     const message = await anthropic.messages.create({
       model: "claude-sonnet-5",
-      max_tokens: 4096,
+      max_tokens: 8192,
       thinking: { type: "disabled" },
       messages: [{ role: "user", content: prompt }],
     });
