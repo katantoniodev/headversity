@@ -19,6 +19,7 @@ import { createClient } from "@/lib/supabase/client";
 import { COLUMNS, type Task, type TaskStatus } from "@/lib/tasks";
 import TaskCard from "@/components/TaskCard";
 import TaskModal, { type TaskFormValues } from "@/components/TaskModal";
+import TaskDetailModal from "@/components/TaskDetailModal";
 
 const COLUMN_DOT_COLORS: Record<TaskStatus, string> = {
   backlog: "bg-gray-400",
@@ -93,7 +94,10 @@ export default function Board({ initialTasks }: { initialTasks: Task[] }) {
   }
 
   const [modalState, setModalState] = useState<
-    { mode: "create"; status: TaskStatus } | { mode: "edit"; task: Task } | null
+    | { mode: "create"; status: TaskStatus }
+    | { mode: "view"; task: Task }
+    | { mode: "edit"; task: Task }
+    | null
   >(null);
 
   const supabase = createClient();
@@ -264,13 +268,21 @@ export default function Board({ initialTasks }: { initialTasks: Task[] }) {
               label={col.label}
               tasks={tasksByStatus(col.status)}
               onAddClick={() => setModalState({ mode: "create", status: col.status })}
-              onCardClick={(task) => setModalState({ mode: "edit", task })}
+              onCardClick={(task) => setModalState({ mode: "view", task })}
             />
           ))}
         </div>
       </DndContext>
 
-      {modalState && (
+      {modalState?.mode === "view" && (
+        <TaskDetailModal
+          task={modalState.task}
+          onClose={() => setModalState(null)}
+          onEdit={() => setModalState({ mode: "edit", task: modalState.task })}
+        />
+      )}
+
+      {(modalState?.mode === "create" || modalState?.mode === "edit") && (
         <TaskModal
           task={modalState.mode === "edit" ? modalState.task : null}
           onClose={() => setModalState(null)}
