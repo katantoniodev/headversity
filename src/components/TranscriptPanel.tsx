@@ -85,7 +85,11 @@ export default function TranscriptPanel({
 
       setResultMessage(
         context === "kb"
-          ? `Saved notes to your Knowledge Base.${taskPart ? ` Also ${taskPart}.` : ""}`
+          ? data.kb_entry_created
+            ? `Saved notes to your Knowledge Base.${taskPart ? ` Also ${taskPart}.` : ""}`
+            : taskPart
+              ? `No lasting notes found — nothing added to the Knowledge Base, but ${taskPart}.`
+              : "No lasting notes or action items found in this transcript."
           : `Created ${data.tasks_created} task${data.tasks_created === 1 ? "" : "s"} in To Do.`,
       );
       setMeetingTitle("");

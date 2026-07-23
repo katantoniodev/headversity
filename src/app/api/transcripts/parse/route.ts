@@ -166,8 +166,9 @@ ${transcript.raw_text}
     }
   }
 
-  if (parsed.meeting_summary) {
-    await supabase.from("kb_entries").insert({
+  let kbEntryCreated = false;
+  if (parsed.meeting_summary && parsed.meeting_summary.trim()) {
+    const { error: kbInsertError } = await supabase.from("kb_entries").insert({
       user_id: user.id,
       title: `Meeting summary: ${transcript.meeting_title}`,
       body: parsed.meeting_summary,
@@ -175,6 +176,7 @@ ${transcript.raw_text}
       source_ref: transcriptId,
       tags: [],
     });
+    kbEntryCreated = !kbInsertError;
   }
 
   await supabase
@@ -182,5 +184,8 @@ ${transcript.raw_text}
     .update({ parsed_at: new Date().toISOString() })
     .eq("id", transcriptId);
 
-  return NextResponse.json({ tasks_created: rowsToInsert.length });
+  return NextResponse.json({
+    tasks_created: rowsToInsert.length,
+    kb_entry_created: kbEntryCreated,
+  });
 }
