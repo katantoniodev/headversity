@@ -1,7 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+
+function CallbackError() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  if (!error) return null;
+
+  return (
+    <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
+      Login link failed: {error}
+    </p>
+  );
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,6 +54,10 @@ export default function LoginPage() {
         <p className="mb-6 text-sm text-gray-500">
           Enter your email and we&apos;ll send you a magic link to log in.
         </p>
+
+        <Suspense fallback={null}>
+          <CallbackError />
+        </Suspense>
 
         {status === "sent" ? (
           <p className="rounded-md bg-green-50 p-3 text-sm text-green-800">
