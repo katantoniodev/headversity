@@ -55,6 +55,11 @@ function Column({
           strategy={verticalListSortingStrategy}
         >
           <div className="space-y-2">
+            {tasks.length === 0 && (
+              <p className="rounded-md border border-dashed border-gray-300 p-3 text-center text-xs text-gray-400">
+                No tasks
+              </p>
+            )}
             {tasks.map((task) => (
               <TaskCard
                 key={task.id}
@@ -71,6 +76,13 @@ function Column({
 
 export default function Board({ initialTasks }: { initialTasks: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [prevInitialTasks, setPrevInitialTasks] = useState(initialTasks);
+
+  if (initialTasks !== prevInitialTasks) {
+    setPrevInitialTasks(initialTasks);
+    setTasks(initialTasks);
+  }
+
   const [modalState, setModalState] = useState<
     { mode: "create"; status: TaskStatus } | { mode: "edit"; task: Task } | null
   >(null);
