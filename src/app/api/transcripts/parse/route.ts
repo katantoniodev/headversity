@@ -54,9 +54,16 @@ export async function POST(request: Request) {
 
 That person's name and aliases as they may appear in the transcript: ${aliasLine}
 
-Rules:
+Rules for action_items:
 - Include: tasks assigned to this person, tasks they explicitly committed to (e.g. "I'll...", "<name> will..."), and asks clearly directed at them.
 - Exclude: other people's action items, general discussion, and decisions with no associated task.
+
+Rules for meeting_summary — this becomes a reference article in a personal knowledge base, searched later, NOT a recap of the conversation:
+- Do NOT narrate who said what or walk through the discussion in order.
+- Extract only information with lasting value: decisions made, important facts/numbers/names, tools or processes adopted, and context someone would need to understand a decision months from now.
+- Skip filler, small talk, and anything with no future reference value.
+- Format as markdown with short "## " section headers grouping related points, and bullet points ("- ") under each — not paragraphs.
+- If nothing in the transcript has lasting reference value, return an empty string.
 
 Return STRICT JSON only — no prose, no markdown code fences — matching exactly this shape:
 {

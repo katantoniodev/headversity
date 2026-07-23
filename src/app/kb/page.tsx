@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import AppHeader from "@/components/AppHeader";
+import TranscriptPanel from "@/components/TranscriptPanel";
 import type { KbEntry } from "@/lib/kb";
 
 export default async function KbListPage({
@@ -44,6 +45,8 @@ export default async function KbListPage({
             New entry
           </Link>
         </div>
+
+        <TranscriptPanel />
 
         <form className="mb-4 flex gap-3" method="get">
           <input
