@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
+const inputClass =
+  "rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+
 export default function TranscriptPanel() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -84,7 +87,7 @@ export default function TranscriptPanel() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="mb-4 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+        className="mb-4 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
       >
         Paste transcript
       </button>
@@ -113,14 +116,14 @@ export default function TranscriptPanel() {
             placeholder="Meeting title"
             value={meetingTitle}
             onChange={(e) => setMeetingTitle(e.target.value)}
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+            className={`flex-1 ${inputClass}`}
           />
           <input
             type="date"
             required
             value={meetingDate}
             onChange={(e) => setMeetingDate(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+            className={inputClass}
           />
         </div>
 
@@ -130,14 +133,14 @@ export default function TranscriptPanel() {
           value={rawText}
           onChange={(e) => setRawText(e.target.value)}
           rows={10}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+          className={`w-full ${inputClass}`}
         />
 
         <div className="flex items-center justify-between">
           <button
             type="submit"
             disabled={status === "saving" || status === "parsing"}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
           >
             {status === "saving"
               ? "Saving..."

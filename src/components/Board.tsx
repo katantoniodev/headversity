@@ -20,6 +20,13 @@ import { COLUMNS, type Task, type TaskStatus } from "@/lib/tasks";
 import TaskCard from "@/components/TaskCard";
 import TaskModal, { type TaskFormValues } from "@/components/TaskModal";
 
+const COLUMN_DOT_COLORS: Record<TaskStatus, string> = {
+  backlog: "bg-gray-400",
+  todo: "bg-blue-500",
+  in_progress: "bg-amber-500",
+  done: "bg-emerald-500",
+};
+
 function Column({
   status,
   label,
@@ -34,16 +41,18 @@ function Column({
   onCardClick: (task: Task) => void;
 }) {
   const { setNodeRef } = useDroppable({ id: status });
+  const dotColor = COLUMN_DOT_COLORS[status];
 
   return (
     <div className="flex w-72 shrink-0 flex-col rounded-lg bg-gray-100 p-3">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-gray-700">
+        <h2 className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <span className={`h-2 w-2 rounded-full ${dotColor}`} />
           {label} <span className="text-gray-400">({tasks.length})</span>
         </h2>
         <button
           onClick={onAddClick}
-          className="rounded px-2 py-0.5 text-lg leading-none text-gray-500 hover:bg-gray-200"
+          className="rounded px-2 py-0.5 text-lg leading-none text-gray-500 hover:bg-indigo-100 hover:text-indigo-700"
           aria-label={`Add task to ${label}`}
         >
           +

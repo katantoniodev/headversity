@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { KbEntry, KbSourceType } from "@/lib/kb";
 
+const inputClass =
+  "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+
 export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
   const router = useRouter();
   const supabase = createClient();
@@ -100,7 +103,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+          className={inputClass}
         />
       </div>
 
@@ -113,7 +116,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows={12}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:border-gray-900 focus:outline-none"
+          className={`${inputClass} font-mono`}
         />
       </div>
 
@@ -125,7 +128,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
           <select
             value={sourceType}
             onChange={(e) => setSourceType(e.target.value as KbSourceType)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+            className={inputClass}
           >
             <option value="manual">Manual</option>
             <option value="slack_paste">Slack paste</option>
@@ -141,7 +144,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
             placeholder="e.g. Slack permalink"
             value={sourceRef}
             onChange={(e) => setSourceRef(e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+            className={inputClass}
           />
         </div>
       </div>
@@ -155,7 +158,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
           value={tagsInput}
           onChange={(e) => setTagsInput(e.target.value)}
           placeholder="sales, onboarding"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+          className={inputClass}
         />
       </div>
 
@@ -178,7 +181,7 @@ export default function KbEntryForm({ entry }: { entry?: KbEntry }) {
           <button
             type="submit"
             disabled={status === "saving"}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
           >
             {status === "saving" ? "Saving..." : "Save"}
           </button>

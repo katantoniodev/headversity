@@ -3,6 +3,9 @@
 import { useState } from "react";
 import type { Task, TaskPriority } from "@/lib/tasks";
 
+const inputClass =
+  "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+
 export type TaskFormValues = {
   title: string;
   detail: string;
@@ -59,7 +62,7 @@ export default function TaskModal({
               onChange={(e) =>
                 setValues((v) => ({ ...v, title: e.target.value }))
               }
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+              className={inputClass}
             />
           </div>
 
@@ -73,7 +76,7 @@ export default function TaskModal({
                 setValues((v) => ({ ...v, detail: e.target.value }))
               }
               rows={3}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+              className={inputClass}
             />
           </div>
 
@@ -90,7 +93,7 @@ export default function TaskModal({
                     priority: e.target.value as TaskPriority | "",
                   }))
                 }
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+                className={inputClass}
               >
                 <option value="">None</option>
                 <option value="low">Low</option>
@@ -108,7 +111,7 @@ export default function TaskModal({
                 onChange={(e) =>
                   setValues((v) => ({ ...v, due_date: e.target.value }))
                 }
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+                className={inputClass}
               />
             </div>
           </div>
@@ -129,13 +132,13 @@ export default function TaskModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700"
               >
                 Save
               </button>

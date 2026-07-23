@@ -39,7 +39,7 @@ export default async function KbListPage({
           </h1>
           <Link
             href="/kb/new"
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
           >
             New entry
           </Link>
@@ -51,11 +51,11 @@ export default async function KbListPage({
             name="q"
             defaultValue={q}
             placeholder="Search title and body..."
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none"
+            className="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
           <button
             type="submit"
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Search
           </button>
@@ -66,7 +66,7 @@ export default async function KbListPage({
             <Link
               href="/kb"
               className={`rounded-full px-3 py-1 text-xs font-medium ${
-                !tag ? "bg-gray-900 text-white" : "bg-gray-200 text-gray-700"
+                !tag ? "bg-indigo-600 text-white" : "bg-gray-200 text-gray-700"
               }`}
             >
               All
@@ -77,7 +77,7 @@ export default async function KbListPage({
                 href={`/kb?tag=${encodeURIComponent(t)}`}
                 className={`rounded-full px-3 py-1 text-xs font-medium ${
                   tag === t
-                    ? "bg-gray-900 text-white"
+                    ? "bg-indigo-600 text-white"
                     : "bg-gray-200 text-gray-700"
                 }`}
               >

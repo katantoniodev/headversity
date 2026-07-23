@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Headversity",
+  title: "Workspace",
   description: "Tasks, knowledge base, and sales KPIs in one place",
 };
 

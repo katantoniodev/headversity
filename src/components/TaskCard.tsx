@@ -5,9 +5,15 @@ import { CSS } from "@dnd-kit/utilities";
 import type { Task } from "@/lib/tasks";
 
 const PRIORITY_STYLES: Record<string, string> = {
-  low: "bg-gray-100 text-gray-600",
+  low: "bg-emerald-100 text-emerald-700",
   med: "bg-amber-100 text-amber-700",
   high: "bg-red-100 text-red-700",
+};
+
+const PRIORITY_BORDER: Record<string, string> = {
+  low: "border-l-emerald-400",
+  med: "border-l-amber-400",
+  high: "border-l-red-400",
 };
 
 export default function TaskCard({
@@ -33,7 +39,7 @@ export default function TaskCard({
       {...attributes}
       {...listeners}
       onClick={onClick}
-      className="cursor-grab rounded-md border border-gray-200 bg-white p-3 text-sm shadow-sm hover:border-gray-300 active:cursor-grabbing"
+      className={`cursor-grab rounded-md border border-gray-200 border-l-4 ${task.priority ? PRIORITY_BORDER[task.priority] : "border-l-gray-200"} bg-white p-3 text-sm shadow-sm hover:border-gray-300 hover:shadow-md active:cursor-grabbing`}
     >
       <p className="font-medium text-gray-900">{task.title}</p>
       <div className="mt-2 flex flex-wrap items-center gap-2">
