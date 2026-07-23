@@ -80,10 +80,11 @@ ${transcript.raw_text}
     const message = await anthropic.messages.create({
       model: "claude-sonnet-5",
       max_tokens: 4096,
+      thinking: { type: "disabled" },
       messages: [{ role: "user", content: prompt }],
     });
-    const block = message.content[0];
-    responseText = block?.type === "text" ? block.text : "";
+    const textBlock = message.content.find((b) => b.type === "text");
+    responseText = textBlock?.type === "text" ? textBlock.text : "";
   } catch {
     return NextResponse.json(
       { error: "Failed to reach Claude" },
