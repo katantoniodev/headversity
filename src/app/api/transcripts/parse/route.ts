@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 type ParsedActionItem = {
   title: string;
@@ -86,12 +86,13 @@ ${transcript.raw_text}
 
   let responseText: string;
   try {
-    const message = await anthropic.messages.create({
+    const stream = anthropic.messages.stream({
       model: "claude-sonnet-5",
-      max_tokens: 16000,
+      max_tokens: 32000,
       thinking: { type: "disabled" },
       messages: [{ role: "user", content: prompt }],
     });
+    const message = await stream.finalMessage();
     const textBlock = message.content.find((b) => b.type === "text");
     responseText = textBlock?.type === "text" ? textBlock.text : "";
   } catch (err) {
